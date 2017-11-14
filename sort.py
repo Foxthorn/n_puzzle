@@ -34,7 +34,7 @@ class Sort:
         return diff
 
     @staticmethod
-    def fourth(x, y, puz):
+    def fourth(x, y, puz):              #saves the right shift in self.__fourth
         puz = copy.deepcopy(puz)
         temp = puz[x][y]
         puz[x][y] = puz[x][y + 1]
@@ -42,7 +42,7 @@ class Sort:
         return puz
 
     @staticmethod
-    def third(x, y, puz):
+    def third(x, y, puz):               #saves the left shift in self.__third
         puz = copy.deepcopy(puz)
         temp = puz[x][y]
         puz[x][y] = puz[x][y - 1]
@@ -50,7 +50,7 @@ class Sort:
         return puz
 
     @staticmethod
-    def sec(x, y, puz):
+    def sec(x, y, puz):                 #saves the downwards shift in self.__sec
         puz = copy.deepcopy(puz)
         temp = puz[x][y]
         puz[x][y] = puz[x + 1][y]
@@ -58,20 +58,20 @@ class Sort:
         return puz
 
     @staticmethod
-    def first(x, y, puz):
+    def first(x, y, puz):               #saves the upwards shift in self.__one
         puz = copy.deepcopy(puz)
         temp = puz[x][y]
         puz[x][y] = puz[x - 1][y]
         puz[x - 1][y] = temp
         return puz
 
-    def sort(self, puzzle):
-        self.__pos_list.append(puzzle)
+    def sort(self, puzzle):             #main implementation of manhattan A* sorting (MESSY AS ALL HELL)
+        self.__pos_list.append(puzzle)  #0 is the blank space in the matrix
         pos = []
         child = []
         item_index = 0
         i = 0
-        for row in puzzle:
+        for row in puzzle:              #finding x y for the blank space
             for i in row:
                 if i == 0:
                     break
@@ -96,23 +96,23 @@ class Sort:
             self.__fourth = self.fourth(x, y, copy.deepcopy(puzzle))
             child.append(self.__fourth)
             pos.append("R")
-        num = self.child_calculation(child)
-        print num
+        num = self.child_calculation(child)     #find which node has the most correctly positioned numbers
+        # print num
         if puzzle != self.__goal:
             maxi = 0
             count = 0
             last = num[0]
-            for i in num:
-                if i < last:
+            for i in num:                       #selects which node to add to the history of nodes for backtracking
+                if i < last:                    #backtracking hasnt been implemented yet, probs the reason for infinite recursion
                     last = i
                     maxi = count
                 count += 1
             self.__moves_list.append(pos[maxi])
-            if child[maxi] in self.__pos_list:
+            if child[maxi] in self.__pos_list:  #start recursion
                 self.sort(self.__pos_list[0])
             else:
-                self.sort(child[maxi])
-        else:
-            print self.__pos_list
+                self.sort(child[maxi])          #start from begining (causes the infinite recursion probs) supposed to choose a different node this time...
+        else:                                   #... dont know how to implement it though
+            print self.__pos_list               
             print self.__moves_list
             return True
