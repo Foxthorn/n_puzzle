@@ -112,10 +112,13 @@ def a_star(start, goal, h):
                 for line in node:
                     print line
                 print "\n"
-            print goal, "\n"
+            for line in goal:
+                print line
+            print "\n"
             print 'Total number of states ever selected in the "opened" set:', open.selected
             print "Maximum number of states ever represented in memory at the same :",
             print len(open.nodes) + len(closed.nodes)
+            print "Total number of moves :", len(path)
             print "Maximum nodes held in open list :", open.max_held
             print "Total nodes added to closed list :", len(closed.nodes)
             return
