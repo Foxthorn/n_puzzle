@@ -1,15 +1,8 @@
 class Goal:
     __size = 0
 
-    def __init__(self, line):
-        num = 0
-        comm = 0
-        for char in line:
-            if char == "#":
-                comm = 1
-            if char.isdigit() and comm == 0:
-                num = num * 10 + ord(char) - ord('0')
-        self.__size = num
+    def __init__(self, size):
+        self.__size = size
 
     def spiral_part(self, x, y, n):
         if x == -1 and y == 0:
