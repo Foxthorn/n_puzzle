@@ -22,19 +22,12 @@ class List:
         self.max_held = 0
         self.selected = 0
 
-    def get_next(self, data):
+    def get_data(self, puz):
         cur = self.head
         while cur.next:
             cur = cur.next
-            if cur.data == data:
-                cur = cur.next
+            if cur.data.puz == puz:
                 return cur.data
-
-    def get_last_node(self):
-        cur = self.head
-        while cur.next:
-            cur = cur.next
-        print cur.data.parent
 
     def get_lowest(self):
         cur = self.head
@@ -111,6 +104,10 @@ def a_star(start, goal, h):
     while open.length() != 0:
         current = open.get_lowest()
         if current.puz == goal:
+            while current.parent:
+                path.append(current.parent)
+                current = closed.get_data(current.parent)
+            path.reverse()
             for node in path:
                 for line in node:
                     print line
@@ -126,14 +123,14 @@ def a_star(start, goal, h):
         closed.add(current)
         expand = move.move(current.puz)
         for node in expand:
+            h_node = heuristics.calculate_h(node)
             if closed.find(node):
                 continue
             if open.find(node):
-                h_node = heuristics.calculate_h(node)
                 if h_node < current.heuristic:
                     open.update_h(current.puz, node, h_node)
+                    closed.erase(current.puz)
             else:
-                h_node = heuristics.calculate_h(node)
                 cur_data = Data(node, h_node, current.puz)
                 open.add(cur_data)
     print "No Solution"
