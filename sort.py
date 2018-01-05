@@ -3,10 +3,11 @@ from move import *
 
 
 class Data(object):
-    def __init__(self, puz, h, parent=None):
+    def __init__(self, puz, h, count, parent=None):
         self.puz = puz
         self.heuristic = h
         self.parent = parent
+        self.count = count
 
 
 class Node:
@@ -38,13 +39,15 @@ class List:
                 low = cur
         return low.data
 
-    def update_h(self, parent, puz, h):
+    def update_h(self, parent, puz, h, count):
         cur = self.head
         while cur.next:
             cur = cur.next
             if cur.data.puz == puz:
                 cur.data.heuristic = h
                 cur.data.parent = parent
+                if count < cur.data.count:
+                    cur.data.count = count
                 return
 
     def erase(self, puz):
@@ -98,7 +101,7 @@ def a_star(start, goal, h):
     heuristics = Heuristics(h, goal)
     move = Move(goal)
     h_start = heuristics.calculate_h(start)
-    start_data = Data(start, h_start)
+    start_data = Data(start, h_start, 0)
     open.add(start_data)
     path = []
     while open.length() != 0:
@@ -126,15 +129,15 @@ def a_star(start, goal, h):
         closed.add(current)
         expand = move.move(current.puz)
         for node in expand:
-            h_node = heuristics.calculate_h(node)
+            h_node = heuristics.calculate_h(node) + current.count + 1
             if closed.find(node):
                 continue
             if open.find(node):
-                if h_node < current.heuristic:
+                if h_node < current.heuristic + current.count:
                     open.update_h(current.puz, node, h_node)
                     closed.erase(current.puz)
             else:
-                cur_data = Data(node, h_node, current.puz)
+                cur_data = Data(node, h_node, current.count + 1, current.puz)
                 open.add(cur_data)
     print "No Solution"
     return
