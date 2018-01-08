@@ -96,6 +96,8 @@ class List:
 
 
 def a_star(start, goal, h):
+    if check_solvable(start) == 1:
+        return
     open = List()
     closed = List()
     heuristics = Heuristics(h, goal)
@@ -142,3 +144,26 @@ def a_star(start, goal, h):
     print "No Solution"
     return
 
+
+def check_solvable(puzzle):
+    inv = 0
+    j= 0
+    while j < len(puzzle):
+        i = 0
+        while i < len(puzzle):
+            char = puzzle[j][i]
+            x = i
+            y = j
+            while y < len(puzzle):
+                while x < len(puzzle):
+                    if char > puzzle[y][x] != 0:
+                        inv += 1
+                    x += 1
+                x = 0
+                y += 1
+            i += 1
+        j += 1
+    if inv % 2 == 0:
+        print "\nUnsolvable puzzle"
+        return 1
+    return 0

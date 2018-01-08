@@ -1,7 +1,6 @@
 import sys
 import time
 import re
-import subprocess
 from goal import *
 from sort import a_star
 
@@ -70,20 +69,29 @@ def setup_puzzle(fd):
             else:
                 num = num * 10 + ord(char) - ord('0')
         y += 1
+    check = []
+    for line in mat:
+        for c in line:
+            if c not in check:
+                check.append(c)
+            else:
+                print "Invalid File, ensure there is a newline at the end of the file"
+                sys.exit(1)
     return mat, s
 
 
 print "-- Starting --"
 time.sleep(1)
-if sys.argv[1] != '-g':
-    try:
-        fd = open(sys.argv[1])
-        matrix, size = setup_puzzle(fd)
-    except:
-        print "-- Unable to open file --"
-        sys.exit(1)
 if len(sys.argv) < 2 or len(sys.argv) > 4:
-    print "Usage: python [-g : Generate Puzzle] [filename] optional([-l : linear, -h : hamming, -m : manhattan)"
+    print "Usage: python [filename] optional([-l : linear, -h : hamming, -m : manhattan)"
+    print "To generate a file run the gen.py file"
+    sys.exit(1)
+try:
+    fd = open(sys.argv[1])
+    matrix, size = setup_puzzle(fd)
+except:
+    print "-- Unable to open file --"
+    sys.exit(1)
 if len(sys.argv) == 2:
     print "\n-- No heuristic selected, Hamming will be used by default --"
     h = 'h'
