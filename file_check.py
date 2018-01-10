@@ -29,6 +29,7 @@ def setup_puzzle(fd):
 
 def double_check(mat, goal):
     num = []
+    check = []
     for line in goal:
         for c in line:
             num.append(c)
@@ -36,6 +37,11 @@ def double_check(mat, goal):
         for c in line:
             if c not in num:
                 print "\nInvalid number in file\n"
+                sys.exit(1)
+            if c not in check:
+                check.append(c)
+            else:
+                print "\nDuplicate numbers in file\n"
                 sys.exit(1)
 
 

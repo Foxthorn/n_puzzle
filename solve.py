@@ -78,7 +78,7 @@ def check_solvable(puzzle):
             y = j
             while y < len(puzzle):
                 while x < len(puzzle):
-                    if char > puzzle[y][x] != 0:
+                    if char > puzzle[y][x] > 1:
                         inv += 1
                     x += 1
                 x = 0
