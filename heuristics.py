@@ -7,7 +7,7 @@ class Heuristics:
         i = 0
         self.h = h
         if self.h == 'h':
-            print "\nUsing Hamming Distance:\n"
+            print "\nUsing Hamming Distance + Manhattan Distance:\n"
         if self.h == 'm':
             print "\nUsing Manhattan Distance:\n"
         if self.h == 'l':
@@ -19,7 +19,7 @@ class Heuristics:
 
     def calculate_h(self, puz):
         if self.h == 'h':
-            return hamming_distance(puz, self.goal)
+            return hamming_distance(puz, self.goal) + manhattan_distance(puz, self.goal)
         if self.h == 'm':
             return manhattan_distance(puz, self.goal)
         if self.h == 'l':

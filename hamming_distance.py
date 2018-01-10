@@ -1,11 +1,11 @@
-def hamming_distance(current_puz, goal):
-    k = 0
-    num = 0
-    for line in current_puz:
-        j = 0
-        for i in line:
-            if i != goal[k][j] and goal[k][j] != 0:
-                num += 1
-            j += 1
-        k += 1
-    return num
+def hamming_distance(grid, goal):
+    h = 0
+    y = 0
+    for row in grid:
+        x = 0
+        for e in row:
+            if e != 0 and e != goal[y][x]:
+                h += 1
+            x += 1
+        y += 1
+    return h

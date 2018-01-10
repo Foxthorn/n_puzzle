@@ -9,11 +9,11 @@ class Goal:
             return -1
         if y == (x + 1) and x < (n // 2):
             return self.spiral_part(x - 1, y - 1, n - 1) + 4 * (n - y)
-        if x < (n - y) and y <= x:
+        if (n - y) > x >= y:
             return self.spiral_part(y - 1, y, n) + (x - y) + 1
         if x >= (n - y) and y <= x:
             return self.spiral_part(x, y - 1, n) + 1
-        if x >= (n - y) and y > x:
+        if (n - y) <= x < y:
             return self.spiral_part(x + 1, y, n) + 1
         if x < (n - y) and y > x:
             return self.spiral_part(x, y - 1, n) - 1
