@@ -75,12 +75,12 @@ def check_numbers(file, size):
         num = 0
         count = 0
         for j in xrange(len(file[i])):
-            if not file[i][j].isdigit():
-                if file[i][j] != '.':
-                    print "\nInvalid number in file\n"
-                    sys.exit(1)
             if file[i][j] == '#':
                 break
+            if not file[i][j].isdigit():
+                if file[i][j] != '.' and file[i][j] != '#':
+                    print "\nInvalid number in file\n"
+                    sys.exit(1)
             if file[i][j].isdigit():
                 num = num * 10 + ord(file[i][j]) - ord('0')
             if file[i][j] == '.' and j != 0:
@@ -91,15 +91,20 @@ def check_numbers(file, size):
                     sys.exit(1)
         if count != size:
             print "\nSize of puzzle doesn't match size given\n" \
-                  "Ensure file ends with a newline\n"
+                  "Ensure file ends with a newline\n" \
+                  "and that there is a space between the comments and the file"
             sys.exit(1)
 
 
 def get_size(line):
     num = 0
     c = 0
-    while not line[c].isdigit():
-        c += 1
+    try:
+        while not line[c].isdigit():
+            c += 1
+    except:
+        print "\nFirst line of file must either be the size or a comment"
+        sys.exit(1)
     while c < len(line):
         if line[c].isspace() and c != 0:
             break

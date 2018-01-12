@@ -38,6 +38,9 @@ def a_star(puz, goal, size, heur):
                 while current.parent.q != start.q:
                     path.append(current.parent.q)
                     current = current.parent
+            for line in puz:
+                print line
+            print '\n'
             print_output(path, maxim, len(closed_set), i, select, len(path))
             return
 
@@ -73,12 +76,17 @@ def check_solvable(puzzle):
     while j < len(puzzle):
         i = 0
         while i < len(puzzle):
+            if puzzle[j][i] == 1:
+                i += 1
+                if i >= len(puzzle):
+                    i = 0
+                    j += 1
             char = puzzle[j][i]
             x = i
             y = j
             while y < len(puzzle):
                 while x < len(puzzle):
-                    if char > puzzle[y][x] > 1:
+                    if char > puzzle[y][x] > 0:
                         inv += 1
                     x += 1
                 x = 0
