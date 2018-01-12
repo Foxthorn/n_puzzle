@@ -76,11 +76,13 @@ def check_solvable(puzzle):                                 # Number of inversio
     while j < len(puzzle):
         i = 0
         while i < len(puzzle):
-            if puzzle[j][i] == 1:
+            if puzzle[j][i] <= 1:
                 i += 1
                 if i >= len(puzzle):
                     i = 0
                     j += 1
+                    if j >= len(puzzle):
+                        break
             char = puzzle[j][i]
             x = i
             y = j
