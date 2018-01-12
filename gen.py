@@ -28,4 +28,6 @@ def generate_new(size, s):
                 new[y][x] = mat[i]
                 i += 1
         iteration += 1
+    if iteration == 1000:
+        print "Maximum iterations exceeded, puzzle may not be what was selected\n"
     return new

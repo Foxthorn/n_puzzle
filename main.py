@@ -1,6 +1,6 @@
 import time
 from solve import a_star
-from arguments import *
+from arguments import check_argv
 
 
 def main():

@@ -1,4 +1,6 @@
-from file_check import *
+import sys
+from goal import *
+from file_check import setup_puzzle
 from gen import generate_new
 
 
